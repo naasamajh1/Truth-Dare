@@ -49,16 +49,14 @@ const prompt = ai.definePrompt({
   If the maturity is 18+, the prompt can be sexual, naughty, or dark.
   If the maturity is general, the prompt should be appropriate for all ages.
 
-  {{#if (eq type "dare")}}
-  IMPORTANT: The dare MUST be performable indoors or in the current location. It should NOT require the person to go outside or travel to a different location.
-  {{/if}}
+  If {{type}} is "dare": The dare MUST be performable indoors or in the current location. It should NOT require the person to go outside or travel to a different location.
 
   Here are some examples of truth prompts:
   - What is your biggest regret?
   - What is the most embarrassing thing that has ever happened to you?
   - What is your biggest fear?
 
-  Here are some examples of dare prompts (ensure they are indoors if generating new dares):
+  Here are some examples of dare prompts (if {{type}} is "dare", ensure these are treated as indoor examples and any new dares you generate are also indoors):
   - Sing a song loudly.
   - Do 20 pushups.
   - Tell a household member a joke.
