@@ -71,7 +71,7 @@ export function GameClient() {
         <div className="inline-flex justify-center items-center mb-2">
           <WandSparkles className="h-10 w-10 mr-2 text-primary" />
           <CardTitle className="text-4xl font-bold tracking-tight">
-            Risky Revelations
+            Risky Play
           </CardTitle>
         </div>
         <CardDescription className="text-lg">

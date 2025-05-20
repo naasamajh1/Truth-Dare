@@ -1,5 +1,3 @@
-# Firebase Studio
+# Truth and Dare Game Web App
 
-This is a NextJS starter in Firebase Studio.
-
-To get started, take a look at src/app/page.tsx.
+Play truth and dare game online with your friends.

@@ -5,7 +5,7 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
-  title: 'Risky Revelations - Truth or Dare',
+  title: 'Risky Play - Truth or Dare',
   description: 'An adventurous Truth or Dare game with progressive intensity and 18+ options.',
 };
 
