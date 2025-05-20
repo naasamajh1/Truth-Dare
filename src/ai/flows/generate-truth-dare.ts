@@ -51,6 +51,7 @@ const prompt = ai.definePrompt({
 
   If {{type}} is "dare": The dare MUST be performable indoors or in the current location. It should NOT require the person to go outside or travel to a different location.
   If maturity is "18+" and {{type}} is "dare", the dare MUST NOT involve blindfolds or any items that restrict vision.
+  Furthermore, if maturity is "18+" and {{type}} is "dare", the dare MUST NOT involve the removal of any clothing.
 
   Here are some examples of truth prompts:
   - What is your biggest regret?
