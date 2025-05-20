@@ -3,7 +3,7 @@
 'use server';
 
 /**
- * @fileOverview Generates truth and dare prompts based on difficulty and maturity level.
+ * @fileOverview Generates truth and dare prompts based on difficulty and maturity level, avoiding recent repetitions.
  *
  * - generateTruthDare - A function that generates a truth or dare prompt.
  * - TruthDareInput - The input type for the generateTruthDare function.
@@ -21,6 +21,7 @@ const TruthDareInputSchema = z.object({
     .max(10)
     .describe('The difficulty level of the prompt, from 1 (mild) to 10 (wild).'),
   maturity: z.enum(['general', '18+']).describe('The maturity level of the prompt.'),
+  promptHistory: z.array(z.string()).optional().describe('A list of recently generated prompts to avoid repetition. Generate something different from these.'),
 });
 export type TruthDareInput = z.infer<typeof TruthDareInputSchema>;
 
@@ -53,12 +54,20 @@ const prompt = ai.definePrompt({
   If maturity is "18+" and {{type}} is "dare", the dare MUST NOT involve blindfolds or any items that restrict vision.
   Furthermore, if maturity is "18+" and {{type}} is "dare", the dare MUST NOT involve the removal of any clothing.
 
-  Here are some examples of truth prompts:
+  {{#if promptHistory}}
+  IMPORTANT: Avoid generating a prompt that is the same as or has a very similar meaning to any of the following recently generated prompts:
+  {{#each promptHistory}}
+  - "{{{this}}}"
+  {{/each}}
+  Generate something new and distinct from the above list.
+  {{/if}}
+
+  Here are some examples of truth prompts (if you generate a truth prompt, make sure it is different from these and from the history provided):
   - What is your biggest regret?
   - What is the most embarrassing thing that has ever happened to you?
   - What is your biggest fear?
 
-  Here are some examples of dare prompts (if {{type}} is "dare", ensure these are treated as indoor examples and any new dares you generate are also indoors):
+  Here are some examples of dare prompts (if {{type}} is "dare", ensure these are treated as indoor examples, different from the history provided, and any new dares you generate are also indoors):
   - Sing a song loudly.
   - Do 20 pushups.
   - Tell a household member a joke.
@@ -80,4 +89,3 @@ const generateTruthDareFlow = ai.defineFlow(
     return output!;
   }
 );
-

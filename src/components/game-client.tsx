@@ -11,6 +11,8 @@ import { Switch } from "@/components/ui/switch";
 import { Brain, Loader2, SparklesIcon, WandSparkles } from "lucide-react";
 import { useState, useEffect } from "react";
 
+const MAX_PROMPT_HISTORY_LENGTH = 10;
+
 export function GameClient() {
   const [promptType, setPromptType] = useState<"truth" | "dare" | null>(null);
   const [sliderDifficulty, setSliderDifficulty] = useState<number>(1);
@@ -19,6 +21,7 @@ export function GameClient() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [gameRound, setGameRound] = useState<number>(0);
   const [promptKey, setPromptKey] = useState<number>(0); // For re-triggering animation
+  const [promptHistory, setPromptHistory] = useState<string[]>([]);
 
   const handleSelectType = async (type: "truth" | "dare") => {
     setPromptType(type);
@@ -36,6 +39,7 @@ export function GameClient() {
       type,
       difficulty: effectiveDifficulty,
       maturity: is18Plus ? "18+" : "general",
+      promptHistory: promptHistory,
     };
 
     try {
@@ -43,6 +47,13 @@ export function GameClient() {
       setCurrentPrompt(result.prompt);
       setGameRound((prev) => prev + 1);
       setPromptKey(prev => prev + 1); // Update key to re-trigger animation
+      
+      // Update prompt history
+      setPromptHistory(prevHistory => {
+        const newHistory = [result.prompt, ...prevHistory];
+        return newHistory.slice(0, MAX_PROMPT_HISTORY_LENGTH); // Keep only the last N prompts
+      });
+
     } catch (error) {
       console.error("Error generating prompt:", error);
       setCurrentPrompt(
